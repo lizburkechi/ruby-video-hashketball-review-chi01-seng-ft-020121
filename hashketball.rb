@@ -127,4 +127,110 @@ def game_hash
   }
 end
 
-# Write code here
+def num_points_scored(name)
+  game_hash.each do |which_team, team_stats|
+    team_stats[:players].each do |player|
+      if player[:player_name] == name
+        return player[:points]
+      end
+    end
+  end
+end
+
+def shoe_size(name)
+  game_hash.each do |which_team, team_stats|
+    team_stats[:players].each do |player|
+      if player[:player_name] == name
+        return player[:shoe]
+      end
+    end
+  end
+end
+
+def team_colors(team_name)
+if team_name == "Brooklyn Nets"
+  return game_hash[:home][:colors]
+elsif team_name == "Charlotte Hornets"
+  return game_hash[:away][:colors]
+else puts "Sorry, I do not have information for that input"
+  end
+end
+
+#should I change this to just an if then?^
+
+def team_names
+game_hash.collect do |team, team_name|
+  team_name[:team_name]
+  end
+end
+
+def player_numbers(team_names)
+  jersey_number_array = []
+game_hash.each do |team, team_lookup|
+  if team_lookup[:team_name] == team_names
+    team_lookup.each do |names, jersey_nums|
+      if names == :players
+        jersey_nums.each do |player|
+              jersey_number_array.push(player[:number])
+            end
+        end
+      end
+    end
+  end
+  jersey_number_array
+end
+
+def player_stats(player_name)
+game_hash.each do |which_team, team_info|
+  team_info[:players].each do |player|
+    if player[:player_name] == player_name
+      return player
+      end
+    end
+  end
+end
+
+def big_shoe_rebounds
+  biggest_shoe = 0
+  rebounds = 0
+    game_hash.each do |which_team, team_info|
+      team_info[:players].each do |player|
+      shoe_size = player[:shoe]
+      if shoe_size > biggest_shoe
+        biggest_shoe = shoe_size
+        rebounds = player[:rebounds]
+        end
+      end
+  end
+  rebounds
+end
+
+=begin
+def players
+  game_hash[:home][:players].merge(game_hash[:away][:players])
+end
+
+def num_points_scored player_name
+  players[player_name][:points]
+end
+
+def shoe_size player_name
+  players[player_name][:shoe]
+end
+
+def team_colors team_name
+  team(team_name)[:colors]
+end
+
+def team_names
+  [game_hash[:home][:team_name], game_hash[:away][:team_name]]
+end
+
+def player_numbers team_name
+  team(team_name)[:players].map{|key, value| value[:number]}
+end
+
+def player_stats player_name
+  players[player_name]
+end
+=end
